@@ -8,6 +8,8 @@ session_start();
 header("Cache-control: private");
 
 
+
+
 if($_SESSION["access"] == "granted") {
   if (isset($_GET['submit'])){
       $uid = $_SESSION["uid"];
