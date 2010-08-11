@@ -25,7 +25,7 @@ function safe($str){
   return mysql_real_escape_string($str);
 }
 
-$stylesheets = array("css/smoothness/jquery-ui-1.8.custom.css");
+$stylesheets = array("css/smoothness/jquery-ui-1.8.custom.css","css/main.css");
 $styles = "";
 foreach($stylesheets as $sheet){
   $styles .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$basepath/$sheet\" />\n";
@@ -33,8 +33,7 @@ foreach($stylesheets as $sheet){
 
 $scriptfiles = array(
         "js/jquery-1.4.2.min.js",
-        "js/jquery-ui-1.8.custom.min.js",
-        "js/main.js"
+        "js/jquery-ui-1.8.custom.min.js"
         );
 $scripts = "";
 foreach($scriptfiles as $script){

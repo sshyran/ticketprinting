@@ -7,9 +7,8 @@ session_start();
 
 header("Cache-control: private");
 
-
 if($_SESSION["access"] == "granted") {
-  if (isset($_GET['submit'])){
+  /*if (isset($_GET['submit'])){
       $uid = $_SESSION["uid"];
       $num = safe($_GET['num']);
       $start = safe($_GET['start']);
@@ -25,84 +24,67 @@ if($_SESSION["access"] == "granted") {
       require('fpdf16/fpdf.php');
       $PDF = new FPDF();
       $PDF->SetFont('Helvetica', 'B', 16);
-  } 
+  }*/
 } else {
     header("Location: ./login.php");
 }
 ?>
-<html>
-<head>
-<?php print $styles;?>
-<?php print $scripts;?>
-<script type="text/javaScript">
-$(document).ready(function() {
-	$("#create").click(create);
-	$(".ticket-radio").click(function(){
-		var count = $(this).closest('tr').find('.row_count').text();
-		$("input[name=start]").val(function(){
-			return (Number(count) + Number(1));
-			});
-		});
+<script src="js/home.js"></script>
+<script type="text/javascript">
+
+$("#create").click(create);
+$(".ticket-radio").click(function(){
+	var count = $(this).closest('tr').find('.row_count').text();
+	$("input[name=start]").val(function(){
+		return (Number(count) + Number(1));
+	});
 });
-</script>
-</head>
 
-<body style="background-color:#8cb2e7;margin:0;">
-<div class="home">
-			<p>home page</p>
-		
+//$("#CustomerForm").validate({
+//	rules: {
+//		num: { required: true },
+//	}
+//}
 
-		<table style="left:0%; width:45%; top:20%; margin-left:1%; overflow:auto; border-style:none; border-width:1px; border-color:#000000;">
-			<tr><td><p>How many tickets do you want: </p></td><td><p><input type="text" name="num" size="5" <?php if (isset($_GET['submit'])){echo "value=\"" . $num . "\""; }?> /></p></td></tr>
-			<tr><td><p>What should the starting number be: </p></td><td><p><input type="text" name="start" size="5" value="<?php if (isset($_GET['submit'])){echo $start; }else{echo "1";}?>" /></p></td></tr>
-			<tr><td><p>Any text to be added before the ticket number: </p></td><td><p><input type="text" name="t" size="20" <?php if (isset($_GET['submit'])){echo "value=\"" . $t . "\""; }?> /></p></td></tr>
-			<tr><td><p>What font would you like: </p></td><td><p><select name="f">
-			<?php fonts_populate_form($font);?>
-			</select></p></td></tr>
-			<tr><td><p>Watermak Text: </p>
-			</td><td><p><input type="text" name="wt" size="20" <?php if (isset($_GET['submit'])){echo "value=\"" . $wt . "\""; }?> /></p></td></tr>
-			<tr><td><p>What font would you like for the watermark: </p></td><td><p><select name="wf">
+</script>	
+<html>
+<body>
+<table style="position:absolute; left:0%; width:45%; top:30%; overflow:auto; border-style:none; border-width:1px; border-color:#000000;">
+	<tr><td><p>How many tickets do you want: </p></td><td><p><input type="text" name="num" size="5" <?php if (isset($_GET['submit'])){echo "value=\"" . $num . "\""; }?> /></p></td></tr>
+	<tr><td><p>What should the starting number be: </p></td><td><p><input type="text" name="start" size="5" value="<?php if (isset($_GET['submit'])){echo $start; }else{echo "1";}?>" /></p></td></tr>
+	<tr><td><p>Any text to be added before the ticket number: </p></td><td><p><input type="text" name="t" size="20" <?php if (isset($_GET['submit'])){echo "value=\"" . $t . "\""; }?> /></p></td></tr>
+	<tr><td><p>What font would you like: </p></td><td><p><select name="f">
+	<?php fonts_populate_form($font);?>
+	</select></p></td></tr>
+	<tr><td><p>Watermak Text: </p>
+	</td><td><p><input type="text" name="wt" size="20" <?php if (isset($_GET['submit'])){echo "value=\"" . $wt . "\""; }?> /></p></td></tr>
+	<tr><td><p>What font would you like for the watermark: </p></td><td><p><select name="wf">
 
-			<?php fonts_populate_form($wfont);?>
-			</select></p></td>
-			</tr>
-			<tr><td>
-				<button name="create" id="create" value="create">Submit</button>
-				<div id="images" style="display:none;"><p id="loading"><img src="files/ajax-loader.gif" /> Generating Tickets</p><span id="imgp"></span></div>
-				<div id="pdf" style="display:none;"><p id="loadingpdf"><img src="files/ajax-loader.gif" /> Creating PDF</p><span id="pdfp"></span></div>
-				<div id="print_ready" style="display:none;"><p>PDF's ready to print</p></div>
-				<div id="print_sent" style="display:none;"><p>PDF's sent to printer</p></div>
-				<button name="print_bt" id="print_bt" style="display:none;" value="print">Print</button>
-				<div id="print" style="display:none;"><p id="loadingprint"><img src="files/ajax-loader.gif" /> Printing the tickets</p><span id="printp"></span></div>
-				<div id="count"></div>
-			</td></tr>
-		</table>
-	
-		<div style=" position:absolute; left:46%; width:675px; height:85%; top:15%; overflow:auto; border-style:solid; border-width:1px; border-color:#000000;">
-			<table>
-				<?php 
-				echo get_tickets($ticket);
-				?>
-			</table>
-		</div>
+	<?php fonts_populate_form($wfont);?>
+	</select></p></td>
+	</tr>
+	<tr><td>
+		<button name="create" id="create" value="create">Submit</button>
+		<div id="images" style="display:none;"><p id="loading"><img src="files/ajax-loader.gif" /> Generating Tickets</p><span id="imgp"></span></div>
+		<div id="pdf" style="display:none;"><p id="loadingpdf"><img src="files/ajax-loader.gif" /> Creating PDF</p><span id="pdfp"></span></div>
+		<div id="print_ready" style="display:none;"><p>PDF's ready to print</p></div>
+		<div id="print_sent" style="display:none;"><p>PDF's sent to printer</p></div>
+		<button name="print_bt" id="print_bt" style="display:none;" value="print">Print</button>
+		<div id="print" style="display:none;"><p id="loadingprint"><img src="files/ajax-loader.gif" /> Printing the tickets</p><span id="printp"></span></div>
+		<div id="count"></div>
+	</td></tr>
+</table>
+<div style=" position:absolute; left:45%; width:675px; height:85%; top:10%; overflow:auto; border-style:solid; border-width:1px; border-color:#000000;">
+	<table>
+		<?php 
+		echo get_tickets($ticket);
+		?>
+	</table>
 
-
+</div>
+</body>
+</html>
 <?php 
-
-function print_txt($txt){
-  if ($txt != NULL){
-    $txt = preg_replace("{\s+}", '+', $txt);
-    return ", t: \"" . $txt . "\"";
-  }
-}
-
-function print_wtxt($wtxt,$wfont){
-  if ($wtxt != NULL){
-    $wtxt = preg_replace("{\s+}", '+', $wtxt);
-    return ", wtxt: \"" . $wtxt ."\"". ", wfont: \"" . $wfont . "\"";
-  }
-}
-
 function get_tickets($ticket){
     $query = sprintf("SELECT * FROM tickets WHERE active = 1 AND (uid = %d OR shared = 1)",$uid);
     $result = mysql_query($query);
@@ -126,28 +108,4 @@ function get_tickets($ticket){
 
 return $return;
 }
-
-
-function get_count($id){
-  $query = sprintf("SELECT * FROM tickets WHERE id = %d ", $id);
-  $result = mysql_query($query);
-  if ($row = mysql_fetch_row($result)){
-    return $row[4];
-  }
-}
-
-
-
-function ticket_find_one($id){
-  $query = sprintf("SELECT * FROM tickets WHERE id = %d ", $id);
-  $result = mysql_query($query);
-  if ($row = mysql_fetch_row($result)){
-    return $row[2];
-  }
-}
-
 ?>
-	</div>
-</div>
-</body>
-</html>
