@@ -119,13 +119,12 @@ function do_creation(){
 		 * makepng.php knows to stop making images when it reaches tot.  So just because
 		 * we request 54 images at a time does not mean excess images will be created.
 		 */
-			$.get("makepng.php", { submit:"submit", pages:pages, q: i, f: f, img: ticket, t: t, wt: wt, wf: wf,tot:tot },
+			$.get("/makepng.php", { submit:"submit", pages:pages, q: i, f: f, img: ticket, t: t, wt: wt, wf: wf,tot:tot },
 				function(data){
 					// for each call that returns successful, add 54 to the count.
 					// count basically keeps track of how many tickets have been requested.
 					// it is used later for the progress bar.
 				 	count = Number(count) + Number(per_image);
-				 	
 				 	// call eval_count() for each successful ajax call.  
 					eval_count(count,num,tot,start,ticket);		
 				});
@@ -148,7 +147,6 @@ function do_creation(){
  * @param ticket The path/filename of the ticket's image file.  Passed to other functions.
  */
 function eval_count(count,num,tot,start,ticket){
-	
 	// check if count is greater than or equal to total.  Count increases by 54 after each call
 	// so it is assumed that it will be greater than total.
     if(count >= tot){
@@ -186,7 +184,7 @@ function eval_count(count,num,tot,start,ticket){
  * @param ticket The path/filename of the ticket's image file.  Passed to other functions.
  */
 function generate(num,start,tot,ticket){
-	alert("yo");
+	
 	// set a local variable count equal to start.
 	var count = start;
 	
@@ -202,9 +200,8 @@ function generate(num,start,tot,ticket){
 		 * start refers to a variable in the php script. We pass the i from the for loop as the variable start. 
 		 * Much like makepng.php, makepdf.png does not return anything.  It looks through the png files created by
 		 * create(), and adds them, 84 at a time to a pdf.
-		 */
+		 */;
 		$.get("makepdf.php",{submit:"submit",start:i},function(data){
-			alert("blah" . data);
 			// increase the local count variable by 83 (it has already been increased by 1).
 			count = Number(count) + Number(per_pdf) - Number(1);
 			
@@ -297,9 +294,5 @@ function update_count(count,ticket){
 		// update the starting number in the start field
 		$("input[name=start]").val(Number(data.count) + Number(1));
 	});
-}
-
-function update_edits(){
-	alert("yo");
 }
 });

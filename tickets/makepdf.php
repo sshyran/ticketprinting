@@ -1,18 +1,16 @@
 <?php
+require_once('includes/config.inc');
 require_once('fonts/fonts.php');
-require_once 'includes/misc.inc';
-      define('FPDF_FONTPATH','/home/tickets/public_html/fpdf16/font/');
+require_once('includes/misc.inc');
+      define('FPDF_FONTPATH',"$path/fpdf16/font/");
       require('fpdf16/fpdf.php');
-      
-      
+
       $i = $_GET['start'];
       $stop = ($i + 83);
       $stri = sprintf("%04d", $i);
       $stri_array = array($stri);
       for($j=$i;$j<$stop;$j = ($j + 3)){
         $stri_array[] = sprintf("%04d", ($j + 2));
-
-
       }
       $PDF = new FPDF();
       $PDF->SetFont('Helvetica', 'B', 16);
