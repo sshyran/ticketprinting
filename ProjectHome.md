@@ -1,0 +1,1 @@
+This project was built for the Boys & Girls Clubs of the Sequoias to print tickets for various events.  It is built on PHP, MySQL, and jQuery.  It's main function is to auto-number tickets and track how many have been printed.
